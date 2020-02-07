@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="TfmOfflineFilling_Caption">Наполнение оффлайн</string>
+    <string name="TfmOfflineIn_Caption">Прием оффлайн</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmDocForm_DocumentId">Код/номер документа</string>
+    <string name="fmDocForm_DocumentNotFound">Документ с таким кодом/номером не найден</string>
+    <string name="fmDocForm_Caption">Документы</string>
+</resources>

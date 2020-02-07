@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmInvent_Caption">Инвентаризации</string>
+    <string name="fmInvent_DocumentId">Код документа</string>
+    <string name="fmInvent_DocumentNotFound">Инвентаризация с таким кодом не найдена</string>
+</resources>

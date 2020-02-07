@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="TfmWHQueue_Value">Отсканиройте/введите код</string>
+    <string name="TfmWHQueue_Caption">Очередь</string>
+    <string name="TfmWhQueue_Hint_SerialsNum">Отсканируйте серийный номер</string>
+</resources>

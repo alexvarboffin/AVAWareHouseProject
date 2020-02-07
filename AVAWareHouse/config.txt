@@ -1,0 +1,581 @@
+# This is a configuration file for ProGuard.
+# http://proguard.sourceforge.net/index.html#manual/usage.html
+#
+# Starting with version 2.2 of the Android plugin for Gradle, this file is distributed together with
+# the plugin and unpacked at build-time. The files in $ANDROID_HOME are no longer maintained and
+# will be ignored by new version of the Android plugin for Gradle.
+
+# Optimizations: If you don't want to optimize, use the proguard-android.txt configuration file
+# instead of this one, which turns off the optimization flags.
+# Adding optimization introduces certain risks, since for example not all optimizations performed by
+# ProGuard works on all versions of Dalvik.  The following flags turn off various optimizations
+# known to have issues, but the list may not be complete or up to date. (The "arithmetic"
+# optimization can be used if you are only targeting Android 2.0 or later.)  Make sure you test
+# thoroughly if you go this route.
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-optimizationpasses 5
+-allowaccessmodification
+
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+
+# Preserve some attributes that may be required for reflection.
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
+
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+-keep public class com.google.android.vending.licensing.ILicensingService
+-dontnote com.android.vending.licensing.ILicensingService
+-dontnote com.google.vending.licensing.ILicensingService
+-dontnote com.google.android.vending.licensing.ILicensingService
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Keep setters in Views so that animations can still work.
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick.
+-keepclassmembers class * extends android.app.Activity {
+    public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keepclassmembers class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+# Preserve annotated Javascript interface methods.
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# The support libraries contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version. We know about them, and they are safe.
+-dontnote android.support.**
+-dontnote androidx.**
+-dontwarn android.support.**
+-dontwarn androidx.**
+
+# This class is deprecated, but remains for backward compatibility.
+-dontwarn android.util.FloatMath
+
+# Understand the @Keep support annotation.
+-keep class android.support.annotation.Keep
+-keep class androidx.annotation.Keep
+
+-keep @android.support.annotation.Keep class * {*;}
+-keep @androidx.annotation.Keep class * {*;}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep <methods>;
+}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <methods>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @android.support.annotation.Keep <init>(...);
+}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <init>(...);
+}
+
+# These classes are duplicated between android.jar and org.apache.http.legacy.jar.
+-dontnote org.apache.http.**
+-dontnote android.net.http.**
+
+# These classes are duplicated between android.jar and core-lambda-stubs.jar.
+-dontnote java.lang.invoke.**
+
+-printconfiguration proguard-merged-config.txt
+
+
+
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
+
+#Other - D:\android\GitHub\facebook\
+#D:\\source\\CallRecorder\\app\\
+
+#-optimizationpasses 5
+#-dontusemixedcaseclassnames
+#-dontskipnonpubliclibraryclasses
+#-dontpreverify
+#-verbose
+#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+# Allow methods with the same signature, except for the return type,
+# to get the same obfuscation name.
+
+#-overloadaggressively
+
+#-optimizationpasses 30
+#-mergeinterfacesaggressively
+#-dontpreverify
+#-optimizations !code/simplification/arithmetic
+## Put all obfuscated classes into the nameless root package.
+
+
+-flattenpackagehierarchy ''
+#-repackageclasses ''#res override -> flattenpackagehierarchy
+
+#-useuniqueclassmembernames
+#-keeppackagenames doNotKeepAThing
+#
+## Allow classes and class members to be made public.
+#
+#-allowaccessmodification
+
+#-obfuscationdictionary D:\android\GitHub\facebook\proguard\examples\dictionaries\keywords.txt
+-obfuscationdictionary D:\android\GitHub\exe.txt
+
+#D:\android\GitHub\facebook\proguard\examples\dictionaries\keywords.txt
+
+
+-classobfuscationdictionary D:\android\GitHub\facebook\proguard\examples\dictionaries\compact.txt
+-packageobfuscationdictionary D:\android\GitHub\facebook\proguard\examples\dictionaries\windows.txt
+
+#-classobfuscationdictionary D:\android\GitHub\exe.txt
+#-packageobfuscationdictionary D:\android\GitHub\exe.txt
+
+
+#-keep public class * extends android.app.Activity
+#-keep public class * extends android.app.a1
+#-keep public class * extends android.app.Service
+#-keep public class * extends android.content.BroadcastReceiver
+#-keep public class * extends android.content.ContentProvider
+#-keep public class com.android.vending.licensing.ILicensingService
+
+
+#-dontnote
+# OkHttp and Servlet optional dependencies
+-keepattributes Signature
+-keepattributes Annotation
+-keep class okhttp3.* { *; }
+-keep interface okhttp3.* { *; }
+-dontwarn okhttp3.**
+
+
+-dontwarn com.google.appengine.**
+-dontwarn javax.servlet.**
+
+# Support classes for compatibility with older API versions
+
+-dontwarn android.support.**
+-dontnote android.support.**
+
+-keepattributes *Annotation*
+-keepattributes Signature
+-dontwarn com.squareup.**
+-keep class com.squareup.** { *; }
+
+-keep class android.support.v7.widget.SearchView { *; }
+
+-printconfiguration config.txt
+
+
+
+
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int i(...);
+    public static int w(...);
+    public static int d(...);
+    public static int e(...);
+}
+
+
+
+-dontwarn okio.**
+
+#-dontwarn retrofit2.Platform$Java8
+#-dontwarn retrofit.Platform$Java8
+#-dontwarn retrofit2.Platform$Java8
+#-dontwarn rx.internal.util.**
+
+# -keepclassmembers class com.psyberia.sms_regcom.rest.beans.** {
+#   *;
+# }
+
+-dontnote android.net.http.*
+-dontnote org.apache.commons.codec.**
+-dontnote org.apache.http.**
+
+ #Firebase SDK 2.0.0:
+
+-keep class com.firebase.** { *; }
+
+
+-keep class org.apache.** { *; }
+
+-keepnames class com.fasterxml.jackson.** { *; }
+-keepnames class javax.servlet.** { *; }
+-keepnames class org.ietf.jgss.** { *; }
+-dontwarn org.w3c.dom.**
+-dontwarn org.joda.time.**
+-dontwarn org.shaded.apache.**
+-dontwarn org.ietf.jgss.**
+
+
+#-keep class com.dropbox.core.** {*;}
+#-keep class com.dropbox.** {*;}
+
+
+-keep class com.google.common.** {*;}
+-keep class com.square.picasso.** {*;}
+-keep class javax.servlet.http.** {*;}
+
+-keep class okio.Okio.** {*;}
+
+
+#-keep class com.google.android.gms.auth.** {*;}
+#-keep class com.google.android.gms.drive.** {*;}
+
+
+#GMS
+#-keep public class com.google.android.gms.* { public *; }
+-keep class com.google.android.gms.** {*;}
+-dontwarn com.google.android.gms.**
+
+-keep class * extends java.util.ListResourceBundle {
+    protected java.lang.Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+
+#butterknife
+# Retain generated class which implement Unbinder.
+-keep public class * implements butterknife.Unbinder { public <init>(**, android.view.View); }
+
+# Prevent obfuscation of types which use ButterKnife annotations since the simple name
+# is used to reflectively look up the generated ViewBinding.
+-keep class butterknife.*
+-keepclasseswithmembernames class * { @butterknife.* <methods>; }
+-keepclasseswithmembernames class * { @butterknife.* <fields>; }
+
+
+-keep class com.google.android.material.ControlContainerLayout
+-keep public class * extends com.github.anastr.speedviewlib.SpeedView
+-keep class com.google.android.material.ControlContainerLayout** {*;}
+-keep class com.google.android.material.ControlContainerLayout**
+-keepclassmembers class com.google.android.material.ControlContainerLayout** {
+    *;
+}
+
+
+
+-keep public class * extends android.app.Fragment {
+    <init>(...);
+}
+-keep public class * extends android.support.v4.app.Fragment {
+    <init>(...);
+}
+
+# Firebase pojo Objects
+-keep class com.walhalla.mtprotolist.a.** { *; }
+
+#AndroidX
+-keep class com.google.android.material.** { *; }
+
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
+
+
+-keep class androidx.fragment.app.Fragment { *; }
+
+-keep class com.google.unity.** {
+   *;
+}
+
+-keep public class com.google.android.gms.ads.**{
+   public *;
+}
+
+-keep public class com.google.ads.**{
+   public *;
+}
+
+-keepattributes *Annotation*
+-repackageclasses 'com'
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:19
+-keep class androidx.core.app.CoreComponentFactory { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:88
+-keep class androidx.core.content.FileProvider { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:19
+-keep class com.avaerp.apps.warehouse.TApplication { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:45
+-keep class com.avaerp.form.TfmAccPost { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:54
+-keep class com.avaerp.form.TfmAssemble { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:57
+-keep class com.avaerp.form.TfmClssInfo { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:42
+-keep class com.avaerp.form.TfmDocCargo { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:72
+-keep class com.avaerp.form.TfmFilling { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:63
+-keep class com.avaerp.form.TfmGdsPos { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:48
+-keep class com.avaerp.form.TfmInvDoc { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:51
+-keep class com.avaerp.form.TfmInvent { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:78
+-keep class com.avaerp.form.TfmKeyboard { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:36
+-keep class com.avaerp.form.TfmLogin { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:26
+-keep class com.avaerp.form.TfmMain { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:81
+-keep class com.avaerp.form.TfmOfflineFilling { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:84
+-keep class com.avaerp.form.TfmOfflineIn { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:75
+-keep class com.avaerp.form.TfmTakeIn { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:66
+-keep class com.avaerp.form.TfmWHQueue { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:69
+-keep class com.avaerp.form.TfmWhTakeOff { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:60
+-keep class com.avaerp.form.TfmWorkMode { <init>(); }
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\build\intermediates\merged_manifests\release\AndroidManifest.xml:39
+-keep class com.avaerp.form.adam.TDocForm { <init>(); }
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_title_material.xml:57
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_material.xml:52
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_button_bar_material.xml:43
+-keep class android.widget.Space { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_select_dialog_material.xml:23
+-keep class androidx.appcompat.app.AlertController$RecycleListView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_action_menu_item_layout.xml:17
+-keep class androidx.appcompat.view.menu.ActionMenuItemView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_expanded_menu_layout.xml:17
+-keep class androidx.appcompat.view.menu.ExpandedMenuView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_popup_menu_item_layout.xml:17
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_list_menu_item_layout.xml:17
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_cascading_menu_item_layout.xml:20
+-keep class androidx.appcompat.view.menu.ListMenuItemView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_toolbar.xml:27
+-keep class androidx.appcompat.widget.ActionBarContainer { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_toolbar.xml:43
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_action_mode_bar.xml:19
+-keep class androidx.appcompat.widget.ActionBarContextView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_toolbar.xml:17
+-keep class androidx.appcompat.widget.ActionBarOverlayLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_action_menu_layout.xml:17
+-keep class androidx.appcompat.widget.ActionMenuView { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_activity_chooser_view.xml:19
+-keep class androidx.appcompat.widget.ActivityChooserView$InnerLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_material.xml:18
+-keep class androidx.appcompat.widget.AlertDialogLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_button_bar_material.xml:26
+-keep class androidx.appcompat.widget.ButtonBarLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_content_include.xml:19
+-keep class androidx.appcompat.widget.ContentFrameLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_title_material.xml:45
+-keep class androidx.appcompat.widget.DialogTitle { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_simple_overlay_action_mode.xml:23
+-keep class androidx.appcompat.widget.FitWindowsFrameLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_simple.xml:17
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_dialog_title_material.xml:22
+-keep class androidx.appcompat.widget.FitWindowsLinearLayout { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_search_view.xml:75
+-keep class androidx.appcompat.widget.SearchView$SearchAutoComplete { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_toolbar.xml:36
+-keep class androidx.appcompat.widget.Toolbar { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_simple_overlay_action_mode.xml:32
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_screen_simple.xml:25
+-keep class androidx.appcompat.widget.ViewStubCompat { <init>(...); }
+
+# Referenced at C:\Users\combo\.gradle\caches\transforms-2\files-2.1\6119d746697059b7e1b74aab4d181f56\appcompat-1.1.0\res\layout\abc_alert_dialog_material.xml:41
+-keep class androidx.core.widget.NestedScrollView { <init>(...); }
+
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_wh_queue_row.xml:11
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_wh_queue.xml:22
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_take_in_row.xml:30
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_take_in.xml:45
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_offline_in_row.xml:30
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_offline_in.xml:57
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_offline_filling_row.xml:35
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_offline_filling.xml:74
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_filling_row.xml:35
+# Referenced at C:\Users\combo\Desktop\AVAWareHouseProject\newVersion\AVAWareHouse\src\main\res\layout\tfm_filling.xml:74
+-keepclassmembers class * { *** onClick(android.view.View); }
+
+
+# Copyright (C) 2018 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Ensure that reflectively-loaded inflater is not obfuscated. This can be
+# removed when we stop supporting AAPT1 builds.
+-keepnames class androidx.appcompat.app.AppCompatViewInflater
+
+# aapt is not able to read app::actionViewClass and app:actionProviderClass to produce proguard
+# keep rules. Add a commonly used SearchView to the keep list until b/109831488 is resolved.
+-keep class androidx.appcompat.widget.SearchView { <init>(...); }
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# keep setters in VectorDrawables so that animations can still work.
+-keepclassmembers class androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$* {
+   void set*(***);
+   *** get*();
+}
+
+# aapt2 is not (yet) keeping FQCNs defined in the appComponentFactory <application> attribute
+-keep class androidx.core.app.CoreComponentFactory
+
+-keep public class * implements androidx.versionedparcelable.VersionedParcelable
+-keep public class android.support.**Parcelizer { *; }
+-keep public class androidx.**Parcelizer { *; }
+-keep public class androidx.versionedparcelable.ParcelImpl
+
+-keepattributes *Annotation*
+
+-keepclassmembers enum androidx.lifecycle.Lifecycle$Event {
+    <fields>;
+}
+
+-keep !interface * implements androidx.lifecycle.LifecycleObserver {
+}
+
+-keep class * implements androidx.lifecycle.GeneratedAdapter {
+    <init>(...);
+}
+
+-keepclassmembers class ** {
+    @androidx.lifecycle.OnLifecycleEvent *;
+}
+-keepclassmembers,allowobfuscation class * extends androidx.lifecycle.ViewModel {
+    <init>();
+}
+
+-keepclassmembers,allowobfuscation class * extends androidx.lifecycle.AndroidViewModel {
+    <init>(android.app.Application);
+}
+
+# Copyright (C) 2019 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+-keepclassmembers,allowobfuscation class * implements androidx.savedstate.SavedStateRegistry$AutoRecreated {
+    <init>();
+}
+
+-keep,allowobfuscation @interface androidx.annotation.Keep
+-keep @androidx.annotation.Keep class * {*;}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <methods>;
+}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <fields>;
+}
+
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <init>(...);
+}
+
+-ignorewarnings

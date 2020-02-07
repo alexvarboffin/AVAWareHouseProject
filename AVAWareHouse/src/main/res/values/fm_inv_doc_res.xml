@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmInvDoc_Caption">Инвойсы</string>
+    <string name="fmInvDoc_DocumentId">Код документа</string>
+    <string name="fmInvDoc_DocumentNotFound">Инвойс с таким кодом не найден</string>
+</resources>

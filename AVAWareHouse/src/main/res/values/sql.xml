@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_check_user_password">
+        Begin
+            Select Count(*)
+              Into :iResult
+              From DBO.Staff S
+             Where S.iStaffId = :iStaffId
+               And S.vcPassword = :vcPassword;
+        End;
+    </string>
+    <string name="sql_get_clss_info">
+        Begin
+            For C In (Select C.vcArticul
+                           , C.vcFullName
+                           , C.vcColor
+                           , (Select Sum(decQnt)
+                                From DBO.V_LinkFixOst
+                               Where iGdsClssId = C.iGdsClssId
+                                 And iDocumentTypeId = 1
+                                 And iViewFixOstId = 3)||C.vGdsClssUnitBreef decOst3
+                           , (Select iColor
+                                From DBO.Color
+                               Where iColorId = C.iColorId) iColor
+                        From DBO.V_GdsClssToName C
+                       Where iGdsClssId = :iGdsClssId)
+            Loop
+                :vcArticle:= C.vcArticul;
+                :vcFullName:= C.vcFullName;
+                :vcColorName:= C.vcColor;
+                :vcOst3:= C.decOst3;
+                :iColor:= C.iColor;
+                :iResult:= 1;
+            End Loop C;
+        End;
+    </string>
+    <string name="sql_get_version_no">
+        Select vcVersion
+          From DBO.AndrApp
+         Where iAndrAppId > 0
+    </string>
+    <string name="sql_get_version">
+        Select bApp
+          From DBO.AndrApp
+         Where iAndrAppId > 0
+    </string>
+    <string name="sql_document">
+        Select D.iDocumentId
+             , D.vcName
+          From DBO.V_DocumentIdToName D
+         Where D.iDocumentTypeId In (25,98,35)
+           And (To_Char(D.iId) = :vcScanValue Or
+                To_Char(D.iDocumentId) = :vcScanValue Or
+                Upper(D.vcNumDoc) = Upper(:vcScanValue) Or
+                (:vcScanValue Is Null And iTypeValueId_Arch = 0))
+        <!--Select D.iDocumentId
+             , D.vcName
+          From DBO.V_DocumentIdToName D
+         Where D.iDocumentTypeId = :iDocumentTypeId
+           And D.iTypeValueId_Arch = 0
+           And (D.iDocumentId = :iDocumentId Or :iDocumentId = 0)
+         Order By D.dtEnter Desc -->
+    </string>
+    <string name="sql_put_scan">
+        Begin
+            :iMobWhScanId:= DBO.Pck_AvaMobile.PutScan(aDocumentId => :iDocumentId,
+                                                      aStaffId    => :iStaffId,
+                                                      aWorkMode   => :iWorkMode,
+                                                      aSerialsNum => :vcSerialsNum,
+                                                      aArticul    => :vcArticul,
+                                                      aWhZone     => :vcWhZone,
+                                                      aQnt        => :vcQnt,
+                                                      aErrors     => :vcErrors);
+        End;
+    </string>
+    <string name="sql_take_off_load">
+        Select Q.vcSerialsNum
+             , Q.vcFullName
+             , Q.vcArticul
+          From DBO.V_MobWhScan_TakeOff Q
+         Where Q.iDocumentId = :iDocumentId
+           And Q.iStaffId = :iStaffId
+         Order By Q.dtEnter
+    </string>
+    <string name="sql_take_off_on_scan_serials">
+        Begin
+          Select Count(*)
+               , Min(S.vcSerialsNum)
+               , Min(C.vcArticul)
+               , Min(C.vcFullName)
+            Into :RecCount
+               , :vcSerialsNum
+               , :vcArticul
+               , :vcFullName
+            From DBO.V_Serials S
+               , DBO.V_GdsClssToName C
+           Where S.vcSerialsNum = :vcScanValue
+             And C.iGdsClssId = S.iGdsClssId;
+        End;
+    </string>
+    <string name="sql_del_scan">
+        Begin
+            DBO.Pck_AvaMobile.DeleteScan(:iMobWhScanId);
+        End;
+    </string>
+    <string name="sql_confirm">
+        Begin
+            DBO.Pck_AvaMobile.Confirm(aDocumentId => :iDocumentId,
+                                      aStaffId    => :iStaffId,
+                                      aWorkMode   => :iWorkMode);
+        End;
+    </string>
+    <string name="sql_clear">
+        Begin
+            DBO.Pck_AvaMobile.Clear(aDocumentId => :iDocumentId,
+                                    aStaffId    => :iStaffId,
+                                    aWorkMode   => :iWorkMode);
+        End;
+    </string>
+    <string name="sql_doc_form_caption">
+        Select C.vcCaption
+          From DBO.DocumentType DT
+             , DBO.Classes C
+         Where DT.iDocumentTypeId = :iDocumentTypeId
+           And C.iClassesId = DT.iClassesId_Header
+    </string>
+    <string name="sql_wh_queue">
+        Select *
+          From DBO.MobWhScan M
+         Where M.iDocumentId = :iDocumentId
+           And M.iStaffId = :iStaffId
+           And M.iWorkMode = :iWorkMode
+           And M.dtReady Is Null
+         Order By M.dtEnter
+    </string>
+    <string name="sql_serials_info">
+        Select S.vcSerialsNum
+             , C.vcArticul
+             , C.vcFullName
+          From DBO.V_Serials S
+             , DBO.V_GdsClssToName C
+         Where S.vcSerialsNum = :vcScanValue
+           And C.iGdsClssId = S.iGdsClssId
+    </string>
+    <string name="sql_acc_post">
+        Select D.iDocumentId
+             , D.vcName
+             , DS.Summa
+          From DBO. V_DocumentIdToName D
+             , DBO.V_DocSum DS
+         Where D.iDocumentTypeId = 219
+           And D.iTypeValueId_Arch = 0
+           And DS.iDocumentId = D.iDocumentId
+         Order By D.dtEnter Desc
+    </string>
+    <string name="sql_inv_doc">
+        Select D.iDocumentId
+             , D.vcName
+             , DS.Summa
+          From DBO. V_DocumentIdToName D
+             , DBO.V_DocSum DS
+         Where D.iDocumentTypeId = 98
+           And D.iTypeValueId_Arch = 0
+           And DS.iDocumentId = D.iDocumentId
+         Order By D.dtEnter Desc
+    </string>
+    <string name="sql_doc_cargo">
+        Select D.iDocumentId
+             , D.vcName
+             , DS.Summa
+          From DBO. V_DocumentIdToName D
+             , DBO.V_DocSum DS
+         Where D.iDocumentTypeId = 25
+           And D.iTypeValueId_Arch = 0
+           And DS.iDocumentId = D.iDocumentId
+         Order By D.dtEnter Desc
+    </string>
+    <string name="sql_invent">
+        Select D.iDocumentId
+             , D.vcName
+             , DS.Summa
+          From DBO. V_DocumentIdToName D
+             , DBO.V_DocSum DS
+         Where D.iDocumentTypeId = 5
+           And D.iTypeValueId_Arch = 0
+           And DS.iDocumentId = D.iDocumentId
+         Order By D.dtEnter Desc
+    </string>
+    <string name="sql_assemble">
+        Select D.iDocumentId
+             , D.vcName
+             , DS.Summa
+          From DBO. V_DocumentIdToName D
+             , DBO.V_DocSum DS
+         Where D.iDocumentTypeId = 35
+           And D.iTypeValueId_Arch = 0
+           And DS.iDocumentId = D.iDocumentId
+         Order By D.dtEnter Desc
+    </string>
+    <string name="sql_positions">
+        Select GP.iGdsClssId
+             , GP.vcFullName
+             , GP.vcArticul
+             , GP.decQnt
+          From DBO.V_GdsPos GP
+         Where GP.iDocumentId = :iDocumentId
+         Order By GP.vcArticul
+    </string>
+    <string name="sql_wh_queue_put">
+        Begin
+            DBO.Pck_AvaMobile.PutWhQueue(aMobWhScanId => :iMobWhScanId,
+                                         aDocumentId  => :iDocumentId,
+                                         aStaffId     => :iStaffId,
+                                         aWorkMode    => :iWorkMode,
+                                         aValue       => :vcValue);
+        End;
+    </string>
+    <string name="sql_wh_queue_confirm">
+        Begin
+            DBO.Pck_AvaMobil.ConfirmWhQueue(aMobWhScanId => :iMobWhScanId,
+                                            aDocumentId  => :iDocumentId,
+                                            aStaffId     => :iStaffId,
+                                            aWorkMode    => :iWorkMode);
+        End;
+    </string>
+    <string name="sql_offline_filling_start">
+        Begin
+            :vcResult:= DBO.Pck_AvaMobile.OfflineStart(aDocumentId => :iDocumentId,
+                                                       aStaffId    => :iStaffId,
+                                                       aWorkMode   => :iWorkMode);
+        End;
+    </string>
+    <string name="sql_offline_filling_save">
+        Begin
+            :vcResult:= DBO.Pck_AvaMobile.OfflineSave(aDocumentId => :iDocumentId,
+                                                      aStaffId    => :iStaffId,
+                                                      aWorkMode   => :iWorkMode,
+                                                      aData       => :vcData);
+        End;
+    </string>
+</resources>

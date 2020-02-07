@@ -1,0 +1,16 @@
+<resources>
+    <string name="message_field_is_required">Не заполнено</string>
+    <string name="error_no_internet">Нет подключения к интернету</string>
+    <string name="error_not_connected">Сервер недоступен</string>
+    <string name="error_sql_syntax">Ошибка в запросе</string>
+    <string name="error_wrong_password">Неправильный пароль или табельный номер</string>
+    <string name="error_wrong_user_name">Неправильный табельный номер</string>
+    <string name="error_clss_not_found">Артикул не найден</string>
+    <string name="error_wrong_clss_id">Неправильный артикул</string>
+    <string name="error_cannot_check_version">Не удалось проверить наличие обновлений</string>
+    <string name="error_cannot_load_version">Не удалось загрузить обновление</string>
+    <string name="error_fetching_row">Ошибка получения данных</string>
+    <string name="error_describe_document_caption">Неизыестный вид документов</string>
+    <string name="dialog_sql_running">Выполнение запроса…</string>
+    <string name="msg_not_found">Не найдено</string>
+</resources>

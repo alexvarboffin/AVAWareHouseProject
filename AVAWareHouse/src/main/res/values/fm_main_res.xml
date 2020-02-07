@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmMain_AccPost">Счета поставщиков</string>
+    <string name="fmMain_InvDoc">Инвойсы</string>
+    <string name="fmMain_DocCargo">Перемещения</string>
+    <string name="fmMain_Invent">Инвентаризации</string>
+    <string name="fmMain_Assemble">Производственные задания</string>
+    <string name="fmMain_GdsClss">Информация по артикулу</string>
+</resources>

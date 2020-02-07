@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmAssemble_Caption">Производственные задания</string>
+    <string name="fmAssemble_DocumentId">Код документа</string>
+    <string name="fmAssemble_DocumentNotFound">Производственное задание с таким кодом не найдено</string>
+</resources>

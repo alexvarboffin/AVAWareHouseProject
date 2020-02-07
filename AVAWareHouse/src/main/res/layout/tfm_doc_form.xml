@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/user_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="@string/fmDocForm_DocumentId"
+            android:imeOptions="actionSearch"
+            android:inputType="number"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_margin="8dp"
+            android:id="@+id/TfmDocForm_btKeyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/btn_keyboard"
+            android:drawableStart="@drawable/btn_keyboard" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/TfmDocForm_gvData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="fmClssInfo_Caption">Информация по артикулу</string>
+    <string name="fmClssInfo_edClssId">Введите артикул</string>
+    <string name="fmClssInfo_btSearch">Поиск</string>
+    <string name="fmClssInfo_lbFullName">Наименование</string>
+    <string name="fmClssInfo_lbShortName">Внешний артикул</string>
+    <string name="fmClssInfo_lbColor">Расцветка</string>
+    <string name="fmClssInfo_lbOst3">Логический остаток</string>
+    <string name="fmClssInfo_ClssIdRequired">Укажите артикул</string>"
+</resources>

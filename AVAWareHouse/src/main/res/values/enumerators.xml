@@ -1,0 +1,7 @@
+<resources>
+    <integer name="enum_required_views">1</integer>
+    <integer name="enum_set_listeners">2</integer>
+    <integer name="enum_save_views">3</integer>
+    <integer name="enum_load_views">4</integer>
+    <integer name="enum_set_view_props">5</integer>
+</resources>

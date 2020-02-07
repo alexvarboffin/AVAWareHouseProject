@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prefix_staff_id">10</string>
+    <string name="prefix_clss_id">30</string>
+</resources>

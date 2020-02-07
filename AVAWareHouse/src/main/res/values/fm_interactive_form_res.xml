@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmInteractiveForm_btOK">OK</string>
+    <string name="fmInteractiveForm_btCancel">Отмена</string>
+    <string name="fmInteractiveForm_btYes">Да</string>
+    <string name="fmInteractiveForm_btNo">Нет</string>
+</resources>

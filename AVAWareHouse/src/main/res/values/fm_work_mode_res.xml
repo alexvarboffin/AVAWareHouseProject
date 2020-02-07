@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmWorkMode_TakeOff">Снятие</string>
+    <string name="fmWorkMode_TakeOn">Прием</string>
+    <string name="fmWorkMode_Filling">Наполнение</string>
+    <string name="fmWorkMode_View">Просмотр</string>
+</resources>

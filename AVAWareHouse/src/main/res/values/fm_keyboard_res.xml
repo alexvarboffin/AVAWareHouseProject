@@ -1,0 +1,5 @@
+<resources>
+    <string name="fmKeyboard_btBackspace">Bk</string>
+    <string name="fmKeyboard_btClear">C</string>
+    <string name="TfmKeyboard_Caption">Клавиатура</string>
+</resources>

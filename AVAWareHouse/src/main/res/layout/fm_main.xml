@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fmMain_pnMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainForm">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/fmMain.btClssInfo"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/fmMain_GdsClss"/>
+    </LinearLayout>
+</FrameLayout>

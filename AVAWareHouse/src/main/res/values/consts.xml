@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="iDocumentTypeId_AccPost">219</integer>
+    <integer name="iDocumentTypeId_InvDoc">98</integer>
+    <integer name="iDocumentTypeId_Invent">5</integer>
+    <integer name="iDocumentTypeId_Assemble">35</integer>
+    <integer name="iDocumentTypeId_DocCargo">25</integer>
+</resources>

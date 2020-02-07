@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmAccPost_Caption">Счета поставщиков</string>
+    <string name="fmAccPost_DocumentId">Код документа</string>
+    <string name="fmAccPost_DocumentNotFound">Счет поставщика с таким кодом не найден</string>
+</resources>

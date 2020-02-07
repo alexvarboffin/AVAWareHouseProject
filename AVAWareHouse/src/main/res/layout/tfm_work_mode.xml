@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/TfmWorkMode.btTakeOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fmWorkMode_TakeOff"/>
+    <Button
+        android:id="@+id/TfmWorkMode.btTakeOn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fmWorkMode_TakeOn"/>
+    <Button
+        android:id="@+id/TfmWorkMode.btFilling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fmWorkMode_Filling"/>
+    <Button
+        android:id="@+id/TfmWorkMode.btView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fmWorkMode_View"/>
+</LinearLayout>

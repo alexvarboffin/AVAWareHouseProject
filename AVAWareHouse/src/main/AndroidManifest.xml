@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.avaerp.apps.warehouse">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-permission
+        android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission
+        android:name="android.permission.INTERACT_ACROSS_USERS"
+        tools:ignore="ProtectedPermissions" />
+
+
+    <application
+        android:name=".TApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.avaerp.form.TfmMain"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--
+        -->
+        <activity
+            android:name="com.avaerp.form.TfmLogin"
+            android:label="@string/fmLogin_Caption" />
+        <activity
+            android:name="com.avaerp.form.adam.TDocForm"
+            android:label="@string/fmDocForm_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmDocCargo"
+            android:label="@string/fmDocCargo_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmAccPost"
+            android:label="@string/fmAccPost_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmInvDoc"
+            android:label="@string/fmInvDoc_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmInvent"
+            android:label="@string/fmInvent_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmAssemble"
+            android:label="@string/fmAssemble_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmClssInfo"
+            android:label="@string/fmClssInfo_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmWorkMode"
+            android:label="@string/fmWorkMode_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmGdsPos"
+            android:label="@string/fmGdsPos_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmWHQueue"
+            android:label="@string/TfmWHQueue_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmWhTakeOff"
+            android:label="@string/TfmWHQueue_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmFilling"
+            android:label="@string/TfmFilling_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmTakeIn"
+            android:label="@string/TfmTakeIn_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmKeyboard"
+            android:label="@string/TfmKeyboard_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmOfflineFilling"
+            android:label="@string/TfmOfflineFilling_Caption" />
+        <activity
+            android:name="com.avaerp.form.TfmOfflineIn"
+            android:label="@string/TfmOfflineIn_Caption" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+
+</manifest>

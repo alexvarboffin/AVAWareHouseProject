@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fmDocCargo_Caption">Перемещения</string>
+    <string name="fmDocCargo_DocumentId">Код документа</string>
+    <string name="fmDocCargo_DocumentNotFound">Пемещение с таким кодом не найдено</string>
+</resources>

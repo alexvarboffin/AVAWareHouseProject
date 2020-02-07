@@ -1,0 +1,108 @@
+apply plugin: 'com.android.application'
+//repositories {
+//    google()
+//    jcenter()
+//}
+allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.2'
+
+    def versionPropsFile = file('version.properties')
+
+    if (versionPropsFile.canRead()) {
+        Properties versionProps = new Properties()
+
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+
+        defaultConfig {
+
+//            vectorDrawables.useSupportLibrary = true
+//            resConfigs "ru", "uk", "en"
+
+            //Disale because chronometr not support xml
+//            vectorDrawables {
+//                useSupportLibrary = true
+//            }
+
+            multiDexEnabled false
+            applicationId 'com.avaerp.apps.warehouse'
+            minSdkVersion rootProject.minSdkVersion
+            targetSdkVersion rootProject.targetSdkVersion
+            versionCode code
+            versionName "1.1." + code + ".release"
+            testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        }
+
+
+    } else {
+        throw new GradleException("Could not read version.properties!")
+    }
+    signingConfigs {
+
+        debug {
+            keyAlias 'release'
+            keyPassword 'release'
+            storeFile file('../keystore/keystore.jks')
+            storePassword 'release'
+        }
+
+        release {
+            keyAlias 'release'
+            keyPassword 'release'
+            storeFile file('../keystore/keystore.jks')
+            storePassword 'release'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //debuggable false
+            //jniDebuggable false
+            signingConfig signingConfigs.release
+        }
+        debug {
+//            // to debug ProGuard rules
+            multiDexEnabled true
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-debug.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    //implementation group: 'com.oracle', name: 'ojdbc14', version: '10.2.0.2.0'
+    //implementation files('libs/ojdbc14.jar')
+    //implementation 'ojdbc:ojdbc:14'
+    //implementation "com.oracle:ojdbc14:10.2.0.2.0"
+    //implementation 'com.google.guava:guava:24.1-jre'
+    // Use JUnit test framework
+    //testImplementation 'junit:junit:4.13'
+    //implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+    //implementation files('C:/Users/combo/Desktop/AVAWareHouseProject/libs/ojdbc14.jar')
+    implementation files('libs/ojdbc14.jar')
+}
