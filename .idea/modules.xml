@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AVAWareHouse/AVAWareHouse.iml" filepath="$PROJECT_DIR$/AVAWareHouse/AVAWareHouse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/newVersion.iml" filepath="$PROJECT_DIR$/newVersion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AVAWareHouseProject.iml" filepath="$PROJECT_DIR$/AVAWareHouseProject.iml" />
     </modules>
   </component>
 </project>

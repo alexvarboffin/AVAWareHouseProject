@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 //    google()
 //    jcenter()
 //}
-allprojects {
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-}
+//allprojects {
+//    repositories {
+//        flatDir {
+//            dirs 'libs'
+//        }
+//    }
+//}
 
 android {
     compileSdkVersion 29
@@ -95,6 +95,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.20")
     //implementation group: 'com.oracle', name: 'ojdbc14', version: '10.2.0.2.0'
     //implementation files('libs/ojdbc14.jar')
     //implementation 'ojdbc:ojdbc:14'
