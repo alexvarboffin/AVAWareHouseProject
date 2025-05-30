@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:paddingBottom="16sp"
                 android:text="@string/fmLogin_lbVersion"
-                android:gravity="right"
+                android:gravity="center"
                 android:singleLine="true"/>
             <EditText
                 android:id="@+id/TfmLogin_edStaffId"

@@ -1,29 +1,43 @@
+plugins {
+    id 'com.android.application' version '8.3.2' apply false
+    //id 'com.android.application' version '2.3.3' apply false
+
+
+    //id 'com.android.application' version '3.2.0' apply false
+
+    //id 'com.android.library' version '8.3.0' apply false     // Для библиотек
+//    id 'org.jetbrains.kotlin.android' version '1.9.0' apply false  // Если используете Kotlin
+}
 ext {
     minSdkVersion = 14
     targetSdkVersion = 29
 }
 
-buildscript {
-    repositories {
-        google()
-        jcenter()
+//buildscript {
+//    repositories {
+//        google()
+//        mavenLocal()
+//        mavenCentral()
+//        jcenter()
+//
+//    }
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:3.5.4'
+//
+//        // NOTE: Do not place your application dependencies here; they belong
+//        // in the individual module build.gradle files
+//    }
+//}
 
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-
-    }
-}
+//allprojects {
+//    repositories {
+//        google()
+//        mavenLocal()
+//        mavenCentral()
+//        jcenter()
+//
+//    }
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

@@ -1,7 +1,7 @@
 <resources>
     <string name="fmLogin_Caption">Вход в AVA ERP</string>
     <string name="fmLogin_lbHeader">AVA ERP</string>
-    <string name="fmLogin_lbAppName">Склаской учет</string>
+    <string name="fmLogin_lbAppName">Складской учет</string>
     <string name="fmLogin_lbVersion">Версия программы %s</string>
     <string name="fmLogin_StaffId">Табельный номер</string>
     <string name="fmLogin_Password">Пароль</string>

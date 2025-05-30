@@ -1,19 +1,32 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    //id 'org.jetbrains.kotlin.android' version '1.9.0' apply false  // Если используете Kotlin
+}
 //repositories {
 //    google()
 //    jcenter()
 //}
-allprojects {
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
-}
+//allprojects {
+//    repositories {
+//        flatDir {
+//            dirs 'libs'
+//        }
+//    }
+//}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+
+    namespace "com.avaerp.apps.warehouse"
+
+//    compileSdkVersion 35
+//    buildToolsVersion '35.0.1'
+
+//    compileSdkVersion 35
+//    buildToolsVersion "35.0.1"
+
+    compileSdkVersion 18
+    buildToolsVersion "19.0.2"
 
     def versionPropsFile = file('version.properties')
 
@@ -79,24 +92,30 @@ android {
         }
         debug {
 //            // to debug ProGuard rules
-            multiDexEnabled true
-//            minifyEnabled true
+            multiDexEnabled false
+            minifyEnabled false
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-debug.pro'
             signingConfig signingConfigs.debug
         }
     }
 
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures{
+        buildConfig = true
     }
 }
 
 dependencies {
+
+
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     //implementation group: 'com.oracle', name: 'ojdbc14', version: '10.2.0.2.0'
-    //implementation files('libs/ojdbc14.jar')
+
     //implementation 'ojdbc:ojdbc:14'
     //implementation "com.oracle:ojdbc14:10.2.0.2.0"
     //implementation 'com.google.guava:guava:24.1-jre'
@@ -104,5 +123,18 @@ dependencies {
     //testImplementation 'junit:junit:4.13'
     //implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
     //implementation files('C:/Users/combo/Desktop/AVAWareHouseProject/libs/ojdbc14.jar')
-    implementation files('libs/ojdbc14.jar')
+
+    //implementation files('libs/ojdbc14.jar')//❌ Устарел (2004 г.)
+    //implementation files('libs/ojdbc8.jar')
+    // https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8
+    //implementation("com.oracle.database.jdbc:ojdbc8:23.7.0.25.01")
+
+    //https://github.com/gabriellima-wav/GS-Mobile/blob/aabc1a646047d625d066c1cb55825351b38c34fd/gradle/libs.versions.toml#L14
+    implementation("com.oracle.database.jdbc:ojdbc8:18.3.0.0")
+//    implementation("com.oracle.database.jdbc:ojdbc8:19.25.0.0")
+//    implementation 'com.oracle.database.jdbc:ojdbc8:21.17.0.0'
+//    implementation 'com.oracle.database.jdbc:ojdbc11:23.7.0.25.01'
+
+    //implementation("org.sqldroid:sqldroid:1.0.3")
+    //implementation("com.oracle.ojdbc:ojdbc8:19.3.0.0")
 }

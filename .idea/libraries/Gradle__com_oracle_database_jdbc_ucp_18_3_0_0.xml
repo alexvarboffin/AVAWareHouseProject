@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.oracle.database.jdbc:ucp:18.3.0.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.oracle.database.jdbc" artifactId="ucp" version="18.3.0.0" baseVersion="18.3.0.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ucp/18.3.0.0/b844d15da29d5c4f23a230318f9fd808087a9962/ucp-18.3.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ucp/18.3.0.0/444ff88fa245ab1069791cd941c90c744fa749b/ucp-18.3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ucp/18.3.0.0/bc15f00ebacbeb0669f0ed925917c177912db7af/ucp-18.3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
