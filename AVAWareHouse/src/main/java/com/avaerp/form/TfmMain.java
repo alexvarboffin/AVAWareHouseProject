@@ -32,51 +32,31 @@ public class TfmMain extends TDBForm {
     protected void onClick(View aView) {
         TParams params = new TParams();
         qp("iDocumentTypeId").setValue(0);
-        switch (aView.getId()) {
-            case R.id.TfmMain_btFilling: {
-                qpGlobal("WorkMode").setValue(1);
-                showForm(TfmFilling.class, false, params);
-                break;
-            }
-            case R.id.TfmMain_btTakeIn: {
-                qpGlobal("WorkMode").setValue(2);
-                showForm(TfmTakeIn.class, false, params);
-                break;
-            }
-            case R.id.TfmMain_btAccPost: {
-                params.qp("iDocumentTypeId").setValue(219);
-                break;
-            }
-            case R.id.TfmMain_btInvDoc: {
-                params.qp("iDocumentTypeId").setValue(98);
-                break;
-            }
-            case R.id.TfmMain_btInvent: {
-                params.qp("iDocumentTypeId").setValue(5);
-                break;
-            }
-            case R.id.TfmMain_btAssemble: {
-                params.qp("iDocumentTypeId").setValue(35);
-                break;
-            }
-            case R.id.TfmMain_btDocCargo: {
-                params.qp("iDocumentTypeId").setValue(25);
-                break;
-            }
-            case R.id.TfmMain_btClssInfo: {
-                showForm(TfmClssInfo.class, false);
-                break;
-            }
-            case R.id.TfmMain_btOfflineFilling: {
-                qpGlobal("WorkMode").setValue(1);
-                showForm(TfmOfflineFilling.class, false);
-                break;
-            }
-            case R.id.TfmMain_btOfflineIn: {
-                qpGlobal("WorkMode").setValue(2);
-                showForm(TfmOfflineIn.class, false);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmMain_btFilling) {
+            qpGlobal("WorkMode").setValue(1);
+            showForm(TfmFilling.class, false, params);
+        } else if (id == R.id.TfmMain_btTakeIn) {
+            qpGlobal("WorkMode").setValue(2);
+            showForm(TfmTakeIn.class, false, params);
+        } else if (id == R.id.TfmMain_btAccPost) {
+            params.qp("iDocumentTypeId").setValue(219);
+        } else if (id == R.id.TfmMain_btInvDoc) {
+            params.qp("iDocumentTypeId").setValue(98);
+        } else if (id == R.id.TfmMain_btInvent) {
+            params.qp("iDocumentTypeId").setValue(5);
+        } else if (id == R.id.TfmMain_btAssemble) {
+            params.qp("iDocumentTypeId").setValue(35);
+        } else if (id == R.id.TfmMain_btDocCargo) {
+            params.qp("iDocumentTypeId").setValue(25);
+        } else if (id == R.id.TfmMain_btClssInfo) {
+            showForm(TfmClssInfo.class, false);
+        } else if (id == R.id.TfmMain_btOfflineFilling) {
+            qpGlobal("WorkMode").setValue(1);
+            showForm(TfmOfflineFilling.class, false);
+        } else if (id == R.id.TfmMain_btOfflineIn) {
+            qpGlobal("WorkMode").setValue(2);
+            showForm(TfmOfflineIn.class, false);
         }
         if (params.qp("iDocumentTypeId").getInteger() != 0) {
             showForm(TDocForm.class, false, params);

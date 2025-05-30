@@ -105,48 +105,49 @@ public class TfmWHQueue extends TDBListForm {
 
     @Override
     public void onSqlExecuted(int aSqlId, TParams aParams, TSqlExecutor.TExecuteStatus aStatus) {
-        switch (aSqlId) {
-            case (R.string.sql_put_scan): {
-                if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
-                    HashMap<String, Object> row = new HashMap<String, Object>();
-                    row.put("iMobWhScanId", qp("iMobWhScanId").getInteger());
-                    row.put("vcSerialsNum", qp("vcSerialsNum").getString());
-                    row.put("vcArticul", qp("vcArticul").getString());
-                    row.put("vcWhZone", qp("vcWhZone").getString());
-                    row.put("vcQnt", qp("vcQnt").getString());
-                    row.put("vcErrors", qp("vcErrors").getString());
-                    mDataSet.add(row);
+        if (aSqlId == R.string.sql_put_scan) {
+            if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
+                HashMap<String, Object> row = new HashMap<String, Object>();
+                row.put("iMobWhScanId", qp("iMobWhScanId").getInteger());
+                row.put("vcSerialsNum", qp("vcSerialsNum").getString());
+                row.put("vcArticul", qp("vcArticul").getString());
+                row.put("vcWhZone", qp("vcWhZone").getString());
+                row.put("vcQnt", qp("vcQnt").getString());
+                row.put("vcErrors", qp("vcErrors").getString());
+                mDataSet.add(row);
+                mAdapter.notifyDataSetChanged();
+                clear();
+                return;
+            }
+            for (int i = 0; i < mDataSet.size(); i++) {
+                //int i1 = (Integer) mDataSet.get(i).get("iMobWhScanId");
+                //int i2 = qp("iMobWhScanId").getInteger();
+                //if (i1 == i2) {
+                if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
+                    mDataSet.remove(i);
                     mAdapter.notifyDataSetChanged();
-                    clear();
                     break;
                 }
             }
-            case (R.string.sql_del_scan): {
-                for (int i = 0; i < mDataSet.size(); i++) {
-                    //int i1 = (Integer) mDataSet.get(i).get("iMobWhScanId");
-                    //int i2 = qp("iMobWhScanId").getInteger();
-                    //if (i1 == i2) {
-                    if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
-                        mDataSet.remove(i);
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                    }
+        } else if (aSqlId == R.string.sql_del_scan) {
+            for (int i = 0; i < mDataSet.size(); i++) {
+                //int i1 = (Integer) mDataSet.get(i).get("iMobWhScanId");
+                //int i2 = qp("iMobWhScanId").getInteger();
+                //if (i1 == i2) {
+                if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
+                    mDataSet.remove(i);
+                    mAdapter.notifyDataSetChanged();
+                    break;
                 }
-                break;
             }
-            case (R.string.sql_confirm): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            case (R.string.sql_clear): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            default: {
-                super.onSqlExecuted(aSqlId, aParams, aStatus);
-            }
+        } else if (aSqlId == R.string.sql_confirm) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+        } else if (aSqlId == R.string.sql_clear) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+        } else {
+            super.onSqlExecuted(aSqlId, aParams, aStatus);
         }
     }
 
@@ -170,20 +171,14 @@ public class TfmWHQueue extends TDBListForm {
 
     public void onClick(View aView) {
         super.onClick(aView);
-        switch (aView.getId()) {
-            case (R.id.btDelRow): {
-                qp("iMobWhScanId").setValue(aView.getTag().toString());
-                executeSql(R.string.sql_del_scan);
-                break;
-            }
-            case (R.id.btClear): {
-                executeSql(R.string.sql_clear);
-                break;
-            }
-            case (R.id.btConfirm): {
-                executeSql(R.string.sql_confirm);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.btDelRow) {
+            qp("iMobWhScanId").setValue(aView.getTag().toString());
+            executeSql(R.string.sql_del_scan);
+        } else if (id == R.id.btClear) {
+            executeSql(R.string.sql_clear);
+        } else if (id == R.id.btConfirm) {
+            executeSql(R.string.sql_confirm);
         }
     }
 /*    @Override

@@ -29,31 +29,23 @@ public class TfmWorkMode extends TStoredForm {
     }
     @Override
     public void onClick(View aView) {
-        switch (aView.getId()) {
-            case R.id.TfmWorkMode_btTakeOff: {
-                qpGlobal("WorkMode").setValue(WM_TAKE_OFF);
-                setResult(RESULT_OK);
-                finish();
-                break;
-            }
-            case R.id.TfmWorkMode_btTakeOn: {
-                qpGlobal("WorkMode").setValue(WM_TAKE_ON);
-                setResult(RESULT_OK);
-                finish();
-                break;
-            }
-            case R.id.TfmWorkMode_btFilling: {
-                qpGlobal("WorkMode").setValue(WM_FILLING);
-                setResult(RESULT_OK);
-                finish();
-                break;
-            }
-            case R.id.TfmWorkMode_btView: {
-                qpGlobal("WorkMode").setValue(WM_VIEW);
-                setResult(RESULT_OK);
-                finish();
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmWorkMode_btTakeOff) {
+            qpGlobal("WorkMode").setValue(WM_TAKE_OFF);
+            setResult(RESULT_OK);
+            finish();
+        } else if (id == R.id.TfmWorkMode_btTakeOn) {
+            qpGlobal("WorkMode").setValue(WM_TAKE_ON);
+            setResult(RESULT_OK);
+            finish();
+        } else if (id == R.id.TfmWorkMode_btFilling) {
+            qpGlobal("WorkMode").setValue(WM_FILLING);
+            setResult(RESULT_OK);
+            finish();
+        } else if (id == R.id.TfmWorkMode_btView) {
+            qpGlobal("WorkMode").setValue(WM_VIEW);
+            setResult(RESULT_OK);
+            finish();
         }
     }
 }

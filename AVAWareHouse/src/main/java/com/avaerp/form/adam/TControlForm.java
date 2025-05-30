@@ -123,26 +123,28 @@ public abstract class TControlForm extends TInteractiveForm {
     }
 
     protected boolean onEnumViews(int aEnumId, View aView, TParams aData) {
-        switch (aEnumId) {
-            case R.integer.enum_set_listeners: {
-                if (aView instanceof AdapterView) {
-                    ((AdapterView) aView).setOnItemClickListener(mListItemClickListener);
-                } else {
-                    aView.setOnClickListener(mClickListener);
-                }
-                aView.setOnKeyListener(mKeyListener);
-                aView.setOnFocusChangeListener(mFocusListener);
-                if (aView instanceof TextView) {
-                    ((TextView) aView).setOnEditorActionListener(mEditorActionListener);
-                    ((TextView) aView).setImeOptions(((TextView) aView).getImeOptions() + EditorInfo.IME_FLAG_NO_EXTRACT_UI);
-                }
+        if (aEnumId == R.integer.enum_set_listeners) {
+            if (aView instanceof AdapterView) {
+                ((AdapterView) aView).setOnItemClickListener(mListItemClickListener);
+            } else {
+                aView.setOnClickListener(mClickListener);
             }
-            case R.integer.enum_set_view_props: {
-                if (aView instanceof TextView) {
-                    TextView view = (TextView) aView;
-                    /** Don't expand view while editing in landscape mode */
-                    view.setImeOptions(view.getImeOptions() + EditorInfo.IME_FLAG_NO_FULLSCREEN);
-                }
+            aView.setOnKeyListener(mKeyListener);
+            aView.setOnFocusChangeListener(mFocusListener);
+            if (aView instanceof TextView) {
+                ((TextView) aView).setOnEditorActionListener(mEditorActionListener);
+                ((TextView) aView).setImeOptions(((TextView) aView).getImeOptions() + EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+            }
+            if (aView instanceof TextView) {
+                TextView view = (TextView) aView;
+                /** Don't expand view while editing in landscape mode */
+                view.setImeOptions(view.getImeOptions() + EditorInfo.IME_FLAG_NO_FULLSCREEN);
+            }
+        } else if (aEnumId == R.integer.enum_set_view_props) {
+            if (aView instanceof TextView) {
+                TextView view = (TextView) aView;
+                /** Don't expand view while editing in landscape mode */
+                view.setImeOptions(view.getImeOptions() + EditorInfo.IME_FLAG_NO_FULLSCREEN);
             }
         }
         return true;

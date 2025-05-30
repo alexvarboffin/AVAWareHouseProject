@@ -3,6 +3,7 @@ package com.avaerp.apps.warehouse;
 import android.app.Application;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.avaerp.form.adam.TLogForm;
 import com.avaerp.util.TLoginInfo;
@@ -11,38 +12,76 @@ import com.avaerp.util.TParams;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import oracle.jdbc.driver.OracleDriver;
 
 public class TApplication extends Application {
-    private static final String TAG = "TApplication";
-    private TParams mParams = new TParams();
-    private TLoginInfo mLoginInfo = new TLoginInfo();
-    public TLoginInfo getLoginInfo() {return mLoginInfo;}
+    private static final String TAG = "@@@";
+    private final TParams mParams = new TParams();
+    private final TLoginInfo mLoginInfo = new TLoginInfo();
+
+    public TLoginInfo getLoginInfo() {
+        return mLoginInfo;
+    }
+
     private boolean mIsDriverOk = false;
     private Thread.UncaughtExceptionHandler mDefExceptionHandler;
-    private Thread.UncaughtExceptionHandler mExceptionHandler = new Thread.UncaughtExceptionHandler() {
+    private final Thread.UncaughtExceptionHandler mExceptionHandler = new Thread.UncaughtExceptionHandler() {
         @Override
         public void uncaughtException(Thread aThread, Throwable aException) {
             Log.e(TAG, "Unhandled exception: ", aException);
             //mDefExceptionHandler.uncaughtException(aThread, aException);
         }
     };
+
     public boolean initialize(TLogForm aLogForm) {
+        DriverManager c;
+
         mDefExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(mExceptionHandler);
         if (!mIsDriverOk) {
             try {
-                DriverManager.registerDriver(new OracleDriver());
-                Class.forName("oracle.jdbc.OracleDriver");
+
+
+                try {
+                    Class.forName("oracle.jdbc.OracleDriver");//Old version jdbc14
+                } catch (java.lang.NoClassDefFoundError e) {
+                    Log.d(TAG, "initialize: " + e.getLocalizedMessage());
+                }
+                try {
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
+                } catch (java.lang.NoClassDefFoundError e) {
+                    Log.d(TAG, "initialize: " + e.getLocalizedMessage());
+                }
+
+
+                //Class.forName("oracle.jdbc.OracleDriver");//Old version jdbc14
+
+
+                try {
+                    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                } catch (java.lang.NoClassDefFoundError e) {
+                    Log.d(TAG, "initialize: " + e.getLocalizedMessage());
+                }
+                try {
+                    DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+                } catch (java.lang.NoClassDefFoundError e) {
+                    Log.d(TAG, "initialize: " + e.getLocalizedMessage());
+                }
+
                 mIsDriverOk = true;
-            } catch (SQLException e) {
-                aLogForm.e("Can't register oracle driver", e);
-            } catch (ClassNotFoundException e) {
-                aLogForm.e("Oracle driver not found", e);
+            }
+//            catch (SQLException e) {
+//                aLogForm.e("Can't register oracle driver", e);
+//            }
+//            catch (ClassNotFoundException e) {
+//                aLogForm.e("Oracle driver not found", e);
+//            }
+            catch (Exception e) {
+                Log.d(TAG, "initialize: " + e.getLocalizedMessage());
             }
         }
         return mIsDriverOk;
     }
+
     public String getVersion() {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -52,6 +91,7 @@ public class TApplication extends Application {
         }
 
     }
+
     public TParams.TParam qp(String aParamName) {
         return mParams.qp(aParamName);
     }

@@ -76,8 +76,7 @@ public class TSqlExecutor extends AsyncTask<Void, Void, Void> {
                 mForm.e("Can't login to database", e);
                 return null;
             } catch (NoClassDefFoundError error) {
-                Log.d("@@@", "getConnection: " + loginInfo.getUrl()
-                        + error.getMessage());
+                Log.d("@@@", "getConnection: " + loginInfo.getUrl() + error.getMessage());
                 return null;
             }
         } else {

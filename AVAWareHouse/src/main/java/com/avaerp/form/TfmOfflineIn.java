@@ -111,30 +111,20 @@ public class TfmOfflineIn extends TDBForm {
     @Override
     public void onClick(View aView) {
         super.onClick(aView);
-        switch (aView.getId()) {
-            case (R.id.TfmOfflineIn_btScanKeyboard): {
-                mKeyCtrlId = R.id.TfmOfflineIn_edScan;
-                showKeyboard(true);
-                break;
-            }
-            case (R.id.TfmOfflineIn_Row_btDelRow): {
-                int pos = Integer.parseInt(aView.getTag().toString());
-                mDataSet.remove(pos);
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            case (R.id.TfmOfflineIn_btClear): {
-                yesNo(0, "Очистить список?");
-                break;
-            }
-            case (R.id.TfmOfflineIn_btSave): {
-                executeSql(R.string.sql_offline_filling_save);
-                break;
-            }
-            case (R.id.TfmOfflineIn_btConfirm): {
-                executeSql(R.string.sql_confirm);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmOfflineIn_btScanKeyboard) {
+            mKeyCtrlId = R.id.TfmOfflineIn_edScan;
+            showKeyboard(true);
+        } else if (id == R.id.TfmOfflineIn_Row_btDelRow) {
+            int pos = Integer.parseInt(aView.getTag().toString());
+            mDataSet.remove(pos);
+            mAdapter.notifyDataSetChanged();
+        } else if (id == R.id.TfmOfflineIn_btClear) {
+            yesNo(0, "Очистить список?");
+        } else if (id == R.id.TfmOfflineIn_btSave) {
+            executeSql(R.string.sql_offline_filling_save);
+        } else if (id == R.id.TfmOfflineIn_btConfirm) {
+            executeSql(R.string.sql_confirm);
         }
     }
     @Override
@@ -177,26 +167,19 @@ public class TfmOfflineIn extends TDBForm {
     }
     public void onSqlExecuted(int aSqlId, TParams aParams, TSqlExecutor.TExecuteStatus aStatus) {
         if (!(aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL)) {return;}
-        switch (aSqlId) {
-            case (R.string.sql_offline_filling_start): {
-                if (aParams.qp("vcResult").getString() != null) {
-                    parse(aParams.qp("vcResult").getString());
-                }
-                break;
+        if (aSqlId == R.string.sql_offline_filling_start) {
+            if (aParams.qp("vcResult").getString() != null) {
+                parse(aParams.qp("vcResult").getString());
             }
-            case (R.string.sql_offline_filling_save): {
-                if (aParams.qp("vcResult").getString() != null) {
-                    parse(aParams.qp("vcResult").getString());
-                }
-                sayModal("Данные успешно сохранены");
-                break;
+        } else if (aSqlId == R.string.sql_offline_filling_save) {
+            if (aParams.qp("vcResult").getString() != null) {
+                parse(aParams.qp("vcResult").getString());
             }
-            case (R.string.sql_confirm): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                sayModal("Данные успешно подтверждены");
-                break;
-            }
+            sayModal("Данные успешно сохранены");
+        } else if (aSqlId == R.string.sql_confirm) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+            sayModal("Данные успешно подтверждены");
         }
     }
     @Override

@@ -41,34 +41,30 @@ public class TfmWhTakeOff extends TfmWHQueue {
     }
     @Override
     public void onSqlExecuted(int aSqlId, TParams aParams, TSqlExecutor.TExecuteStatus aStatus) {
-        switch (aSqlId) {
-            case R.string.sql_take_off_on_scan_serials: {
-                if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
-                    HashMap<String, Object> row = new HashMap<String, Object>();
+        if (aSqlId == R.string.sql_take_off_on_scan_serials) {
+            if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
+                HashMap<String, Object> row = new HashMap<String, Object>();
 //                    row.put("iStatus", notFound()? -1: 1);
 //                    row.put("vcSerialsNum", notFound()? MSG_NotFound(): qp("vcSerialsNum").getString());
 //                    row.put("vcArticul", notFound()? MSG_NotFound(): qp("vcArticul").getString());
 //                    row.put("vcFullName", notFound()? MSG_NotFound(): qp("vcFullName").getString());
-                    mDataSet.add(row);
-                }
+                mDataSet.add(row);
             }
         }
     }
     @Override
     public void afterSqlQuery(int aSqlId, TParams aParams, ResultSet aResultSet) {
-        switch (aSqlId) {
-            case R.string.sql_serials_info: {
-                HashMap<String, Object> row = new HashMap<String, Object>();
-                row.put("vcSerialsNum", qp("vcScanValue"));
-                try {
-                    row.put("vcArticul", aResultSet.getString("vcArticul"));
-                    row.put("vcFullName", aResultSet.getString("vcFullName"));
-                } catch (SQLException e) {
-                    row.put("vcArticul", R.string.msg_not_found);
-                    row.put("vcFullName", R.string.msg_not_found);
-                }
-                mDataSet.add(row);
+        if (aSqlId == R.string.sql_serials_info) {
+            HashMap<String, Object> row = new HashMap<String, Object>();
+            row.put("vcSerialsNum", qp("vcScanValue"));
+            try {
+                row.put("vcArticul", aResultSet.getString("vcArticul"));
+                row.put("vcFullName", aResultSet.getString("vcFullName"));
+            } catch (SQLException e) {
+                row.put("vcArticul", R.string.msg_not_found);
+                row.put("vcFullName", R.string.msg_not_found);
             }
+            mDataSet.add(row);
         }
     }
 

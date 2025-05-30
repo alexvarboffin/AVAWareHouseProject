@@ -1,18 +1,11 @@
 package com.avaerp.form.adam;
 
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.avaerp.apps.warehouse.R;
 import com.avaerp.form.TfmGdsPos;
@@ -81,7 +74,7 @@ public class TDocForm extends TDBListForm {
     }
 
     protected void selectWorkMode(int aPosition) {
-        showForm(TfmWorkMode.class, true, getParams());
+        showForm(TfmWorkMode.class, true, getParams0());
     }
 
     @Override
@@ -99,11 +92,11 @@ public class TDocForm extends TDBListForm {
             if (aResultOK) {
                 switch (qpGlobal("WorkMode").getInteger()) {
                     case TfmWorkMode.WM_VIEW: {
-                        showForm(TfmGdsPos.class, false, getParams());
+                        showForm(TfmGdsPos.class, false, getParams0());
                         break;
                     }
                     default: {
-                        showForm(TfmWHQueue.class, false, getParams());
+                        showForm(TfmWHQueue.class, false, getParams0());
                     }
                 }
             }

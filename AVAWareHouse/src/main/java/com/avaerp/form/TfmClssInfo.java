@@ -47,15 +47,11 @@ public class TfmClssInfo extends TDBForm {
     }
     @Override
     public void onClick(View aView) {
-        switch (aView.getId()) {
-            case R.id.TfmClssInfo_btSearch: {
-                loadData();
-                break;
-            }
-            case R.id.TfmClssInfo_btKeyboard: {
-                showKeyboard(true);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmClssInfo_btSearch) {
+            loadData();
+        } else if (id == R.id.TfmClssInfo_btKeyboard) {
+            showKeyboard(true);
         }
     }
     @Override
@@ -71,15 +67,10 @@ public class TfmClssInfo extends TDBForm {
     @Override
     protected boolean onSystemKey(TextView aTextView, int aActionId) {
         boolean result = super.onSystemKey(aTextView, aActionId);
-        switch (aActionId) {
-            case EditorInfo.IME_ACTION_SEARCH: {
-                switch (aTextView.getId()) {
-                    case R.id.TfmClssInfo_edClssId: {
-                        loadData();
-                        result = true;
-                        break;
-                    }
-                }
+        if (aActionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (aTextView.getId() == R.id.TfmClssInfo_edClssId) {
+                loadData();
+                result = true;
             }
         }
         return result;

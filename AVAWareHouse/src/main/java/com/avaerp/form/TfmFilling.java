@@ -24,26 +24,29 @@ public class TfmFilling extends TDBListForm {
     TextView mSerialsControl = null;
     EditText mQntControl = null;
     int mControlForKeyboard;
+
     public void clear() {
         mScanControl.setText(null);
         mArticulControl.setText(null);
         mQntControl.setText("1");
         mSerialsControl.setText(null);
     }
+
     public void tryApply() {
         String mArticul = mArticulControl.getText().toString();
         String mSerials = mSerialsControl.getText().toString();
         String mQnt = mQntControl.getText().toString();
-        if (mQnt.length() == 0) {
+        if (mQnt.isEmpty()) {
             mQnt = "1";
         }
-        if (mArticul.length() > 0 && mSerials.length() > 0) {
+        if (!mArticul.isEmpty() && !mSerials.isEmpty()) {
             qp("vcArticul").setValue(mArticul);
             qp("vcSerialsNum").setValue(mSerials);
             qp("vcQnt").setValue(mQnt);
             executeSql(R.string.sql_put_scan);
         }
     }
+
     @Override
     public void onCreate(Bundle aState) {
         mLayoutId_Form = R.layout.tfm_filling;
@@ -125,73 +128,61 @@ public class TfmFilling extends TDBListForm {
     @Override
     public void onClick(View aView) {
         super.onClick(aView);
-        switch (aView.getId()) {
-            case (R.id.TfmFilling_Row_btDelRow): {
-                qp("iMobWhScanId").setValue(aView.getTag().toString());
-                executeSql(R.string.sql_del_scan);
-                break;
-            }
-            case (R.id.TfmFilling_btClear): {
-                executeSql(R.string.sql_clear);
-                break;
-            }
-            case (R.id.TfmFilling_btConfirm): {
-                executeSql(R.string.sql_confirm);
-                break;
-            }
-            case (R.id.TfmFilling_btQntKeyboard): {
-                mControlForKeyboard = R.id.TfmFilling_edQnt;
-                showKeyboard(true);
-                break;
-            }
-            case (R.id.TfmFilling_btScanKeyboard): {
-                mControlForKeyboard = R.id.TfmFilling_edScan;
-                showKeyboard(true);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmFilling_Row_btDelRow) {
+            qp("iMobWhScanId").setValue(aView.getTag().toString());
+            executeSql(R.string.sql_del_scan);
+        } else if (id == R.id.TfmFilling_btClear) {
+            executeSql(R.string.sql_clear);
+        } else if (id == R.id.TfmFilling_btConfirm) {
+            executeSql(R.string.sql_confirm);
+        } else if (id == R.id.TfmFilling_btQntKeyboard) {
+            mControlForKeyboard = R.id.TfmFilling_edQnt;
+            showKeyboard(true);
+        } else if (id == R.id.TfmFilling_btScanKeyboard) {
+            mControlForKeyboard = R.id.TfmFilling_edScan;
+            showKeyboard(true);
         }
     }
 
     @Override
     public void onSqlExecuted(int aSqlId, TParams aParams, TSqlExecutor.TExecuteStatus aStatus) {
-        switch (aSqlId) {
-            case (R.string.sql_put_scan): {
-                if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
-                    HashMap<String, Object> row = new HashMap<String, Object>();
-                    row.put("iMobWhScanId", qp("iMobWhScanId").getInteger());
-                    row.put("vcSerialsNum", qp("vcSerialsNum").getString());
-                    row.put("vcArticul", qp("vcArticul").getString());
-                    row.put("vcQnt", qp("vcQnt").getString());
-                    row.put("vcErrors", qp("vcErrors").getString());
-                    mDataSet.add(row);
+        if (aSqlId == R.string.sql_put_scan) {
+            if (aStatus == TSqlExecutor.TExecuteStatus.SUCCESSFUL) {
+                HashMap<String, Object> row = new HashMap<String, Object>();
+                row.put("iMobWhScanId", qp("iMobWhScanId").getInteger());
+                row.put("vcSerialsNum", qp("vcSerialsNum").getString());
+                row.put("vcArticul", qp("vcArticul").getString());
+                row.put("vcQnt", qp("vcQnt").getString());
+                row.put("vcErrors", qp("vcErrors").getString());
+                mDataSet.add(row);
+                mAdapter.notifyDataSetChanged();
+                clear();
+                return;
+            }
+            for (int i = 0; i < mDataSet.size(); i++) {
+                if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
+                    mDataSet.remove(i);
                     mAdapter.notifyDataSetChanged();
-                    clear();
                     break;
                 }
             }
-            case (R.string.sql_del_scan): {
-                for (int i = 0; i < mDataSet.size(); i++) {
-                    if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
-                        mDataSet.remove(i);
-                        mAdapter.notifyDataSetChanged();
-                        break;
-                    }
+        } else if (aSqlId == R.string.sql_del_scan) {
+            for (int i = 0; i < mDataSet.size(); i++) {
+                if (Integer.parseInt(mDataSet.get(i).get("iMobWhScanId").toString()) == (qp("iMobWhScanId").getInteger())) {
+                    mDataSet.remove(i);
+                    mAdapter.notifyDataSetChanged();
+                    break;
                 }
-                break;
             }
-            case (R.string.sql_confirm): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            case (R.string.sql_clear): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            default: {
-                super.onSqlExecuted(aSqlId, aParams, aStatus);
-            }
+        } else if (aSqlId == R.string.sql_confirm) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+        } else if (aSqlId == R.string.sql_clear) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+        } else {
+            super.onSqlExecuted(aSqlId, aParams, aStatus);
         }
     }
 
@@ -215,30 +206,37 @@ public class TfmFilling extends TDBListForm {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle aState) {
-        aState.putLong("iDocumentId", qp("iDocumentId").getInteger());
-        aState.putString("mScanControl.Text", mScanControl.getText().toString());
-        aState.putString("mArticulControl.Text", mArticulControl.getText().toString());
-        aState.putString("mSerialsControl.Text", mSerialsControl.getText().toString());
-        aState.putString("mQntControl.Text", mQntControl.getText().toString());
+    protected void onSaveInstanceState(Bundle bundle) {
+        bundle.putLong("iDocumentId", qp("iDocumentId").getInteger());
+        bundle.putString("mScanControl.Text", mScanControl.getText().toString());
+        bundle.putString("mArticulControl.Text", mArticulControl.getText().toString());
+        bundle.putString("mSerialsControl.Text", mSerialsControl.getText().toString());
+        bundle.putString("mQntControl.Text", mQntControl.getText().toString());
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle aState) {
         if (aState != null) {
             qp("iDocumentId").setValue(aState.getLong("iDocumentId", 0));
         }
     }
+
     @Override
-    protected void onPostCreate(Bundle aState) {
-        super.onPostCreate(aState);
+    protected void onPostCreate(Bundle bundle) {
+        super.onPostCreate(bundle);
         if (qp("iDocumentId").getInteger() == 0) {
-            showForm(TfmInvDoc.class, true, getParams());
+            showForm(TfmInvDoc.class, true, getParams0());
         } else {
             querySql(mSqlId_Form);
-            mScanControl.setText(aState.getString("mScanControl.Text", null));
-            mArticulControl.setText(aState.getString("mArticulControl.Text", null));
-            mSerialsControl.setText(aState.getString("mSerialsControl.Text", null));
-            mQntControl.setText(aState.getString("mQntControl.Text", "1"));
+            mScanControl.setText(bundle.getString("mScanControl.Text", null));
+            mArticulControl.setText(bundle.getString("mArticulControl.Text", null));
+            mSerialsControl.setText(bundle.getString("mSerialsControl.Text", null));
+            mQntControl.setText(bundle.getString("mQntControl.Text", "1"));
         }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

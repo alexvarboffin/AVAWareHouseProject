@@ -20,34 +20,25 @@ public class TfmKeyboard extends TStoredForm {
 
     @Override
     public void onClick(View aView) {
-        switch (aView.getId()) {
-            case R.id.TfmKeyboard_btClear: {
-                mValueControl.setText(null);
-                break;
+        int id = aView.getId();
+        if (id == R.id.TfmKeyboard_btClear) {
+            mValueControl.setText(null);
+        } else if (id == R.id.TfmKeyboard_btBackspace) {
+            String mValue = mValueControl.getText().toString();
+            if (mValue != null && !mValue.isEmpty()) {
+                mValueControl.setText(mValue.substring(0, mValue.length() - 1));
             }
-            case R.id.TfmKeyboard_btBackspace: {
-                String mValue = mValueControl.getText().toString();
-                if (mValue != null && mValue.length() > 0) {
-                    mValueControl.setText(mValue.substring(0, mValue.length() - 1));
-                }
-                break;
-            }
-            case R.id.TfmKeyboard_btCancel: {
-                setResult(RESULT_CANCELED);
-                finish();
-                break;
-            }
-            case R.id.TfmKeyboard_btOK: {
-                qpGlobal("KeyboardValue").setValue(mValueControl.getText().toString());
-                setResult(RESULT_OK);
-                finish();
-                break;
-            }
-            default: {
-                if (aView instanceof Button) {
-                    mValueControl.setText(mValueControl.getText().toString()
-                            .concat(((Button) aView).getText().toString()));
-                }
+        } else if (id == R.id.TfmKeyboard_btCancel) {
+            setResult(RESULT_CANCELED);
+            finish();
+        } else if (id == R.id.TfmKeyboard_btOK) {
+            qpGlobal("KeyboardValue").setValue(mValueControl.getText().toString());
+            setResult(RESULT_OK);
+            finish();
+        } else {
+            if (aView instanceof Button) {
+                mValueControl.setText(mValueControl.getText().toString()
+                        .concat(((Button) aView).getText().toString()));
             }
         }
     }

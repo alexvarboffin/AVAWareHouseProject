@@ -1,5 +1,7 @@
 package com.avaerp.util;
 
+import android.util.Log;
+
 public class TLoginInfo {
     private String mUserName;
     private String mPassword;
@@ -17,6 +19,8 @@ public class TLoginInfo {
         }
         mPassword = new Hash().encode(mUserName);
         mUrl = String.format("jdbc:oracle:thin:@%s:%d:%s", aHostName, aPort, aSid);
+
+        Log.d("@@@", "setValues: "+mUrl);
     }
     public String getUserName() {return mUserName;}
     public String getPassword() {return mPassword;}

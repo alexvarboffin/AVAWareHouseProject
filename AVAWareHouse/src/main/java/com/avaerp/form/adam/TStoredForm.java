@@ -9,13 +9,12 @@ import com.avaerp.util.TParams;
 import com.avaerp.util.Util;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TStoredForm extends TControlForm {
 
-    private TParams mParams = new TParams();
+    private final TParams mParams = new TParams();
 
-    protected TParams getParams() {
+    protected TParams getParams0() {
         return mParams;
     }
 
@@ -27,7 +26,7 @@ public class TStoredForm extends TControlForm {
         return getApp().qp(aParamName);
     }
 
-    private ArrayList<TextView> mRequires = new ArrayList<TextView>();
+    private final ArrayList<TextView> mRequires = new ArrayList<TextView>();
 
     protected void setRequires(TextView... aTextViews) {
         mRequires.clear();
@@ -46,7 +45,7 @@ public class TStoredForm extends TControlForm {
         boolean result = true;
         v("Checking if all of required TextViews have text");
         for (TextView view : mRequires) {
-            if (getTextViewText(view).length() == 0) {
+            if (getTextViewText(view).isEmpty()) {
                 view.setError(Util.getString(this, R.string.message_field_is_required));
                 result = false;
             }

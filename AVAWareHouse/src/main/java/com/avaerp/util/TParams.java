@@ -12,7 +12,7 @@ import oracle.sql.BLOB;
 public class TParams {
     public enum TParamType {STRING, INTEGER, FLOAT, DATE, BOOLEAN}
 
-    public class TParam {
+    public static class TParam {
         private String mName;
         private String mValue;
         private TParamType mParamType;

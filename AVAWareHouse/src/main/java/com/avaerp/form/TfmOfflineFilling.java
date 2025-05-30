@@ -105,36 +105,24 @@ public class TfmOfflineFilling extends TDBForm {
     @Override
     public void onClick(View aView) {
         super.onClick(aView);
-        switch (aView.getId()) {
-            case (R.id.TfmOfflineFilling_btQntKeyboard): {
-                mKeyCtrlId = R.id.TfmOfflineFilling_edQnt;
-                showKeyboard(true);
-                break;
-            }
-            case (R.id.TfmOfflineFilling_btScanKeyboard): {
-                mKeyCtrlId = R.id.TfmOfflineFilling_edScan;
-                showKeyboard(true);
-                break;
-            }
-            case (R.id.TfmOfflineFilling_Row_btDelRow): {
-                int pos = Integer.parseInt(aView.getTag().toString());
-                mDataSet.remove(pos);
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            case (R.id.TfmOfflineFilling_btClear): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
-            case (R.id.TfmOfflineFilling_btSave): {
-                executeSql(R.string.sql_offline_filling_save);
-                break;
-            }
-            case (R.id.TfmOfflineFilling_btConfirm): {
-                executeSql(R.string.sql_confirm);
-                break;
-            }
+        int id = aView.getId();
+        if (id == R.id.TfmOfflineFilling_btQntKeyboard) {
+            mKeyCtrlId = R.id.TfmOfflineFilling_edQnt;
+            showKeyboard(true);
+        } else if (id == R.id.TfmOfflineFilling_btScanKeyboard) {
+            mKeyCtrlId = R.id.TfmOfflineFilling_edScan;
+            showKeyboard(true);
+        } else if (id == R.id.TfmOfflineFilling_Row_btDelRow) {
+            int pos = Integer.parseInt(aView.getTag().toString());
+            mDataSet.remove(pos);
+            mAdapter.notifyDataSetChanged();
+        } else if (id == R.id.TfmOfflineFilling_btClear) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
+        } else if (id == R.id.TfmOfflineFilling_btSave) {
+            executeSql(R.string.sql_offline_filling_save);
+        } else if (id == R.id.TfmOfflineFilling_btConfirm) {
+            executeSql(R.string.sql_confirm);
         }
     }
 
@@ -159,9 +147,9 @@ public class TfmOfflineFilling extends TDBForm {
                     }
                 }
             }
-            if (mCtrlArticul.getText().toString().length() > 0 &&
-                    mCtrlSerials.getText().toString().length() > 0 &&
-                    mCtrlQnt.getText().toString().length() > 0 ) {
+            if (!mCtrlArticul.getText().toString().isEmpty() &&
+                    !mCtrlSerials.getText().toString().isEmpty() &&
+                    !mCtrlQnt.getText().toString().isEmpty()) {
                 addScan(mCtrlArticul.getText().toString(), mCtrlSerials.getText().toString(),
                         mCtrlQnt.getText().toString(), null);
                 newScan();
@@ -177,24 +165,17 @@ public class TfmOfflineFilling extends TDBForm {
         return result;
     }
     public void onSqlExecuted(int aSqlId, TParams aParams, TSqlExecutor.TExecuteStatus aStatus) {
-        switch (aSqlId) {
-            case (R.string.sql_offline_filling_start): {
-                if (aParams.qp("vcResult").getString() != null) {
-                    parse(aParams.qp("vcResult").getString());
-                }
-                break;
+        if (aSqlId == R.string.sql_offline_filling_start) {
+            if (aParams.qp("vcResult").getString() != null) {
+                parse(aParams.qp("vcResult").getString());
             }
-            case (R.string.sql_offline_filling_save): {
-                if (aParams.qp("vcResult").getString() != null) {
-                    parse(aParams.qp("vcResult").getString());
-                }
-                break;
+        } else if (aSqlId == R.string.sql_offline_filling_save) {
+            if (aParams.qp("vcResult").getString() != null) {
+                parse(aParams.qp("vcResult").getString());
             }
-            case (R.string.sql_confirm): {
-                mDataSet.clear();
-                mAdapter.notifyDataSetChanged();
-                break;
-            }
+        } else if (aSqlId == R.string.sql_confirm) {
+            mDataSet.clear();
+            mAdapter.notifyDataSetChanged();
         }
     }
     protected void onSaveInstanceState(Bundle aState) {
@@ -215,7 +196,7 @@ public class TfmOfflineFilling extends TDBForm {
     protected void onPostCreate(Bundle aState) {
         super.onPostCreate(aState);
         if (qp("iDocumentId").getInteger() == 0) {
-            showForm(TfmInvDoc.class, true, getParams());
+            showForm(TfmInvDoc.class, true, getParams0());
         } else {
             parse(aState.get("vcData").toString());
             mCtrlScan.setText(aState.getString("mScanControl.Text", ""));
